@@ -1,23 +1,30 @@
-/* style.css - Minimalista Cinza Slate */
-
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
 
 :root {
-  --primary: #4A5568;      /* Slate Gray */
-  --primary-dark: #2D3748; 
-  --bg-light: #F7FAFC;
+  /* Cores Vivas e Modernas */
+  --primary: #00ffdd;       /* Verde-água (Destaque) */
+  --primary-dark: #00d1b5;  /* Verde-água mais escuro para hover */
+  --secondary-bg: #008cff;  /* Azul Marinho Profundo (Substitui o cinza morto) */
+  --bg-light: #f8fafc;      /* Cinza claríssimo para o fundo das seções */
+  --white: #ffffff;
+  --black: #000000;
 }
 
 body {
   font-family: 'Nunito', sans-serif;
   scroll-behavior: smooth;
+  color: #334155;
 }
 
-header { background-color: var(--primary) !important; }
+/* Header */
+header { 
+  background-color: var(--primary) !important; 
+}
 
+/* Botões */
 .btn-primary {
   background-color: var(--primary);
-  color: white !important;
+  color: #1e293b !important; /* Texto escuro no botão claro para ler melhor */
   transition: all 0.3s ease;
   border: none;
   cursor: pointer;
@@ -28,13 +35,14 @@ header { background-color: var(--primary) !important; }
   transform: translateY(-2px);
 }
 
+/* Cards de Serviço */
 .service-card {
-  background: white;
+  background: var(--white);
   border-radius: 1rem;
   padding: 2rem;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
   transition: transform 0.3s;
-  border-bottom: 4px solid #CBD5E0;
+  border-bottom: 4px solid #e2e8f0;
 }
 
 .service-card:hover {
@@ -44,6 +52,16 @@ header { background-color: var(--primary) !important; }
 
 .service-card .icon { font-size: 2.5rem; margin-bottom: 1rem; }
 
+/* --- SEÇÃO DE AGENDAMENTO (Onde estava o cinza morto) --- */
+#agendamento {
+  background-color: var(--white) !important; /* Azul Marinho Elegante */
+  color: var(--white) !important;
+}
+
+#agendamento h2 { color: var(--black) !important; } /* Título ganha destaque */
+#agendamento p { color: #000000 !important; }
+
+/* Botão WhatsApp */
 .whatsapp-btn {
   position: fixed;
   bottom: 20px;
@@ -53,10 +71,10 @@ header { background-color: var(--primary) !important; }
   border-radius: 50%;
   width: 60px;
   height: 60px;
-  display: flex;
+  display: flex; /* Garante que o ícone fique no centro */
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
   z-index: 1000;
   transition: transform 0.2s;
 }
@@ -76,6 +94,7 @@ header { background-color: var(--primary) !important; }
   }
 }
 
+/* Animações */
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
