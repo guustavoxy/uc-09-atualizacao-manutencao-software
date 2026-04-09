@@ -1,86 +1,84 @@
-/* style.css - Patas Felizes Pet Shop */
+/* style.css - Minimalista Cinza Slate */
 
-/* Fonte customizada via Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
 
-/* Reset e base */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+:root {
+  --primary: #4A5568;      /* Slate Gray */
+  --primary-dark: #2D3748; 
+  --bg-light: #F7FAFC;
 }
 
 body {
   font-family: 'Nunito', sans-serif;
-}
-
-/* Scroll suave para âncoras */
-html {
   scroll-behavior: smooth;
 }
 
-/* ===================== 
-   ACESSIBILIDADE - PROBLEMAS PROPOSITAIS 
-   BUG: as classes abaixo usam cores de texto com baixo contraste,
-   isso complementa os problemas de contraste já no HTML via Tailwind.
-===================== */
+header { background-color: var(--primary) !important; }
 
-/* Animação simples de entrada para o hero */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.btn-primary {
+  background-color: var(--primary);
+  color: white !important;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
 }
 
-.hero-text {
-  animation: fadeInUp 0.8s ease both;
+.btn-primary:hover {
+  background-color: var(--primary-dark);
+  transform: translateY(-2px);
 }
 
-/* Estilo para cards de serviço (que NÃO foram implementados no HTML) */
-/* BUG/FEATURE: este CSS existe mas os cards não foram adicionados ao HTML */
 .service-card {
-  background: #fff;
+  background: white;
   border-radius: 1rem;
   padding: 2rem;
-  text-align: center;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  transition: transform 0.3s;
+  border-bottom: 4px solid #CBD5E0;
 }
 
 .service-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  transform: translateY(-5px);
+  border-bottom-color: var(--primary);
 }
 
-.service-card .icon {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
+.service-card .icon { font-size: 2.5rem; margin-bottom: 1rem; }
+
+.whatsapp-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #25D366;
+  color: white;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  z-index: 1000;
+  transition: transform 0.2s;
 }
 
-/* Navbar ativa */
-nav a.active {
-  border-bottom: 2px solid #fff;
-}
+.whatsapp-btn:hover { transform: scale(1.1); }
 
-/* Highlight de formulário com erro de validação */
-input.input-error,
-textarea.input-error {
-  border-color: #f87171;
-}
-
-/* =====================
-   RESPONSIVIDADE BÁSICA
-===================== */
+/* Menu Mobile */
 @media (max-width: 768px) {
-  nav ul {
-    gap: 1rem;
+  #menu-list.hidden { display: none; }
+  #menu-list {
+    background-color: var(--primary);
+    position: absolute;
+    width: 100%;
+    top: 60px;
+    left: 0;
+    z-index: 100;
   }
-
-  /* BUG: no mobile o header não colapsa o menu em hamburguer,
-     os itens ficam todos espremidos - problema de responsividade */
 }
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hero-text { animation: fadeInUp 0.8s ease both; }

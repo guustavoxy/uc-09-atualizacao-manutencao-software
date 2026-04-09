@@ -1,71 +1,118 @@
 // app.js - Patas Felizes Pet Shop
-// Desenvolvido por: João Dev (estagiário)
-// Data: 15/03/2024
+// Versão Corrigida - Equipe de Desenvolvimento UC-09
 
-// =====================
-// VALIDAÇÃO DO FORMULÁRIO
-// =====================
-
-// BUG #20: o evento está escutando 'DOMContentLoaded' mas a função
-// usa getElementById com o ID errado ('form-contato' ao invés de 'formContato')
 document.addEventListener('DOMContentLoaded', function () {
 
-  const form = document.getElementById('form-contato'); // BUG: ID errado! No HTML é 'formContato'
+    // =====================
+    // VALIDAÇÃO DO FORMULÁRIO
+    // =====================
 
-  if (form) {
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
+    // CORREÇÃO BUG #20: Alterado para 'formContato' (ID correto do HTML)
+    const form = document.getElementById('formContato');
 
-      const nome = document.getElementById('nome').value.trim();
-      const email = document.getElementById('e-mail').value.trim();
-      const mensagem = document.getElementById('mensagem').value.trim();
+    if (form) {
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
 
-      // BUG #21: validação de email incompleta - não valida o formato correto
-      if (!nome || !email || !mensagem) {
-        alert('Por favor, preencha todos os campos!');
-        return;
-      }
+            const nome = document.getElementById('nome').value.trim();
+            const email = document.getElementById('e-mail').value.trim();
+            const mensagem = document.getElementById('mensagem').value.trim();
 
-      // BUG #22: mensagem de sucesso diz "entraremos em contato em até 24 horas"
-      // mas o email de contato no HTML está errado (.com.rb), então nunca funcionaria
-      alert('Mensagem enviada com sucesso! Entraremos em contato em até 24 horas.');
-      form.reset();
+            // CORREÇÃO BUG #21: Validação de formato de e-mail usando Regex
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if (!nome || !email || !mensagem) {
+                alert('Por favor, preencha todos os campos!');
+                return;
+            }
+
+            if (!emailRegex.test(email)) {
+                alert('Por favor, insira um e-mail válido!');
+                return;
+            }
+
+            // CORREÇÃO BUG #22: Mensagem agora condiz com o domínio corrigido no HTML (.com.br)
+            alert('Mensagem enviada com sucesso! Nossa equipe entrará em contato em breve.');
+            form.reset();
+        });
+    }
+
+    // =====================
+    // HIGHLIGHT DO MENU ATIVO
+    // =====================
+
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('nav a');
+    const headerHeight = document.querySelector('header').offsetHeight; // Captura altura do header
+
+    window.addEventListener('scroll', function () {
+        let current = '';
+
+        sections.forEach(section => {
+            // CORREÇÃO BUG #23: Agora considera a altura do header fixo (sticky)
+            // Subtraímos a altura do header + um respiro de 10px para precisão
+            const sectionTop = section.offsetTop - (headerHeight + 10);
+            if (window.scrollY >= sectionTop) {
+                current = section.getAttribute('id');
+            }
+        });
+
+        navLinks.forEach(link => {
+            link.classList.remove('text-yellow-200', 'underline'); // Remove estilos de ativo
+            if (link.getAttribute('href') === '#' + current) {
+                // Adiciona classes para destacar (exemplo usando Tailwind)
+                link.classList.add('text-yellow-200', 'underline');
+            }
+        });
     });
-  }
 
-  // =====================
-  // HIGHLIGHT DO MENU ATIVO
-  // =====================
+    // =====================
+    // ANO NO FOOTER (DINÂMICO)
+    // =====================
 
-  // BUG #23: a lógica de scroll para destacar o menu ativo tem um erro de lógica
-  // Ela usa 'offsetTop' sem considerar o header fixo (sticky), 
-  // então o menu ativo sempre ativa antes do usuário chegar na seção
-  const sections = document.querySelectorAll('section[id]');
-  const navLinks = document.querySelectorAll('nav a');
+    // CORREÇÃO BUG #19: Localiza o parágrafo do copyright e atualiza o ano automaticamente
+    const footerCopyright = document.querySelector('footer p');
+    const anoAtual = new Date().getFullYear();
+    
+    if (footerCopyright) {
+        footerCopyright.textContent = `© ${anoAtual} Patas Felizes Pet Shop. Todos os direitos reservados.`;
+    }
+});
 
-  window.addEventListener('scroll', function () {
-    let current = '';
-    sections.forEach(section => {
-      // BUG: não desconta a altura do header sticky (~60px)
-      if (window.scrollY >= section.offsetTop) {
-        current = section.getAttribute('id');
-      }
+const menuButton = document.getElementById('menu-button');
+const menuList = document.getElementById('menu-list');
+
+if (menuButton && menuList) {
+    menuButton.addEventListener('click', function() {
+        // Toggle (liga/desliga) a classe 'hidden' que esconde o menu
+        menuList.classList.toggle('hidden');
+        menuList.classList.toggle('flex'); // Garante que ao aparecer, use flexbox
     });
 
-    navLinks.forEach(link => {
-      link.classList.remove('active');
-      if (link.getAttribute('href') === '#' + current) {
-        link.classList.add('active');
-      }
+    // Fechar o menu ao clicar em um link (opcional, melhora a UX)
+    const links = menuList.querySelectorAll('a');
+    links.forEach(link => {
+        link.addEventListener('click', () => {
+            if (window.innerWidth < 768) { // Apenas se estiver no mobile
+                menuList.classList.add('hidden');
+            }
+        });
     });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Menu Hamburguer
+  const btn = document.getElementById('menu-button');
+  const menu = document.getElementById('menu-list');
+  btn.addEventListener('click', () => menu.classList.toggle('hidden'));
+
+  // Agendamento
+  const form = document.getElementById('formAgendamento');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const pet = document.getElementById('agendamento-pet').value;
+    if(!pet) return alert('Por favor, informe o nome do pet!');
+    alert(`Solicitação enviada para o suporte! Entraremos em contato.`);
+    form.reset();
   });
-
-  // =====================
-  // ANO NO FOOTER (DEVERIA SER DINÂMICO)
-  // =====================
-  // BUG #19 (continuação): o desenvolvedor esqueceu de usar JS para manter
-  // o ano atualizado automaticamente. O ano está hardcoded no HTML como 2021.
-  // O código abaixo foi escrito mas nunca vinculado a nenhum elemento do HTML.
-  const anoAtual = new Date().getFullYear();
-  // console.log('Ano atual:', anoAtual); // linha comentada e nunca usada
 });
