@@ -1,7 +1,9 @@
 using ApiPetshop.Data;
-using ApiPetshop.Models;
+using Infra.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Domain.Entities;
+using Application.DTOs;
 
 namespace ApiPetshop.Controllers;
 

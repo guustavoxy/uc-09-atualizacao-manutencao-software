@@ -1,5 +1,6 @@
-using ApiPetshop.Models;
+using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using Infra.Data;
 
 namespace ApiPetshop.Data;
 
