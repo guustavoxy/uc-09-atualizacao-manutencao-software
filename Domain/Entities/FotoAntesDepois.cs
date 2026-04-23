@@ -1,6 +1,6 @@
-using Microsoft.AspNetCore.Http; // Necessário para usar o IFormFile
 
-namespace ApiPetshop.Models;
+
+namespace Domain.Entities;
 
 /// <summary>
 /// Uma classe Model (Modelo) representa essencialmente a estrutura de uma tabela no Banco de Dados.
@@ -32,11 +32,3 @@ public class FotoAntesDepois
 /// e transportar os dados de requisições web. É a assinatura de dados que a API espera do usuário do sistema.
 /// O DTO evita usarmos a model (FotoAntesDepois) base diretamente na camada de rede.
 /// </summary>
-public class UploadFotoDto
-{
-    // O nome que será recebido da requisição
-    public string NomeCachorro { get; set; }
-    
-    // Representa um envio de arquivo via Form/Mulitpart
-    public IFormFile Arquivo { get; set; }
-}
