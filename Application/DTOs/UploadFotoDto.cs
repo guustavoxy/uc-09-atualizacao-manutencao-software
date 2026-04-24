@@ -9,7 +9,7 @@ namespace Application.DTOs
 {
     public class UploadFotoDto
     {
-        public string NomeCachorro { get; set; } = string.Empty;
-        public IFormFile Arquivo { get; set; } = null!; 
+        public string Titulo { get; set; } = string.Empty;
+        public IFormFile Arquivo { get; set; } = null!;
     }
 }

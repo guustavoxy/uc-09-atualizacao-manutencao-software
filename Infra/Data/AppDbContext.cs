@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Domain.Entities;
+using ApiPetshop.Data.Configurations; 
 
 namespace Infra.Data;
 
@@ -9,13 +10,12 @@ public class AppDbContext : DbContext
 
     public DbSet<Contato> Contatos { get; set; }
     public DbSet<FotoAntesDepois> FotosAntesDepois { get; set; }
-
+    public DbSet<Galeria> Galeria { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        // Se você tiver arquivos de configuração, aponte para eles aqui
-        // Exemplo: modelBuilder.ApplyConfiguration(new FotoAntesDepoisConfiguration());
-        
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
+
         base.OnModelCreating(modelBuilder);
     }
 }
